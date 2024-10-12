@@ -1,9 +1,10 @@
 const express = require('express');
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
-const {userSigninSchema, userSignupSchema} = require("../utils/zodSchemas.js");
+const {userSigninSchema, userSignupSchema, userUpdateSchema} = require("../utils/zodSchemas.js");
 const User = require("../models/user.js");
 const router = express.Router();
+const authUser = require("../middlewares/authUser.js");
 
 router.post("/signup",async (req,res)=>{
     const userData = userSignupSchema.safeParse(req.body);
@@ -61,6 +62,38 @@ router.post("/signin",async(req,res)=>{
     res.status(411).json({
         msg: "Incorrect Password!"
     });
+})
+
+router.patch("/me",authUser, async(req,res)=>{
+    const { success } = userUpdateSchema.safeParse(req.body);
+    if (!success){
+        return res.status(411).json({
+            msg: "Invalid inputs!"
+        })
+    }
+    if(req.body.password){
+        const user = await User.findById(req.userId);
+        if(user)
+            req.body.password = await user.createHash(req.body.password);
+    }
+    await User.findByIdAndUpdate(req.userId,req.body,{ new: true, runValidators: true });
+    res.json({
+        msg: "Updated successfully"
+    })
+})
+
+router.get("/bulk",async(req,res)=>{
+    const filter = req.query.filter || " ";
+    const searchQuery = {
+                $or: [
+                    { firstName: { $regex: filter, $options: "i" } },
+                    { lastName: { $regex: filter, $options: "i" } },
+                ]
+            }
+    const users = await User.find(searchQuery, "email firstName lastName _id");
+    res.json({
+        users
+    })
 })
 
 module.exports = router;

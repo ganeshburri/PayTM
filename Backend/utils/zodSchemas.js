@@ -12,4 +12,10 @@ const userSigninSchema = zod.object({
     password: zod.string().trim()
 });
 
-module.exports = { userSignupSchema, userSigninSchema };
+const userUpdateSchema = zod.object({
+    firstName: zod.string().max(50).optional(),
+    lastName: zod.string().max(50).optional(),
+    password: zod.string().trim().min(6).optional()
+});
+
+module.exports = { userSignupSchema, userSigninSchema, userUpdateSchema };
