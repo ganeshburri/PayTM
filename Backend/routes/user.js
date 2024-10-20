@@ -5,6 +5,7 @@ const {userSigninSchema, userSignupSchema, userUpdateSchema} = require("../utils
 const User = require("../models/user.js");
 const router = express.Router();
 const authUser = require("../middlewares/authUser.js");
+const Account = require("../models/account.js");
 
 router.post("/signup",async (req,res)=>{
     const userData = userSignupSchema.safeParse(req.body);
@@ -29,6 +30,11 @@ router.post("/signup",async (req,res)=>{
     newUser.password = hashedPassword;
     await newUser.save();
     const userId = newUser._id;
+    const userAccount = new Account({
+        userId : userId,
+        balance: (Math.random()*10000) + 1
+    })
+    await userAccount.save();
     const token = jwt.sign({userId},secret);
     res.json({
         msg: "User created successfully",
@@ -83,7 +89,7 @@ router.patch("/me",authUser, async(req,res)=>{
 })
 
 router.get("/bulk",async(req,res)=>{
-    const filter = req.query.filter || " ";
+    const filter = req.query.filter || "";
     const searchQuery = {
                 $or: [
                     { firstName: { $regex: filter, $options: "i" } },

@@ -18,4 +18,9 @@ const userUpdateSchema = zod.object({
     password: zod.string().trim().min(6).optional()
 });
 
-module.exports = { userSignupSchema, userSigninSchema, userUpdateSchema };
+const transferSchema = zod.object({
+    to: zod.string(),
+    amount: zod.number().min(1)
+})
+
+module.exports = { userSignupSchema, userSigninSchema, userUpdateSchema,transferSchema };
