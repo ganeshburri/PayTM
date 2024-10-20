@@ -6,8 +6,9 @@ const User = require("../models/user.js");
 const router = express.Router();
 const authUser = require("../middlewares/authUser.js");
 const Account = require("../models/account.js");
+const wrapAsync = require("../utils/wrapAsync.js");
 
-router.post("/signup",async (req,res)=>{
+router.post("/signup", wrapAsync(async (req,res)=>{
     const userData = userSignupSchema.safeParse(req.body);
     if(!userData.success){
         return res.status(400).json({
@@ -40,9 +41,9 @@ router.post("/signup",async (req,res)=>{
         msg: "User created successfully",
         token
     });
-})
+}))
 
-router.post("/signin",async(req,res)=>{
+router.post("/signin", wrapAsync(async(req,res)=>{
     const userData = userSigninSchema.safeParse(req.body);
     if(!userData.success){
         return res.status(400).json({
@@ -68,9 +69,9 @@ router.post("/signin",async(req,res)=>{
     res.status(411).json({
         msg: "Incorrect Password!"
     });
-})
+}))
 
-router.patch("/me",authUser, async(req,res)=>{
+router.patch("/me",authUser, wrapAsync(async(req,res)=>{
     const { success } = userUpdateSchema.safeParse(req.body);
     if (!success){
         return res.status(411).json({
@@ -86,9 +87,9 @@ router.patch("/me",authUser, async(req,res)=>{
     res.json({
         msg: "Updated successfully"
     })
-})
+}))
 
-router.get("/bulk",async(req,res)=>{
+router.get("/bulk", wrapAsync(async(req,res)=>{
     const filter = req.query.filter || "";
     const searchQuery = {
                 $or: [
@@ -100,6 +101,6 @@ router.get("/bulk",async(req,res)=>{
     res.json({
         users
     })
-})
+}))
 
 module.exports = router;

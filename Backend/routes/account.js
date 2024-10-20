@@ -4,15 +4,16 @@ const Account = require("../models/account.js");
 const { transferSchema } = require("../utils/zodSchemas.js");
 const mongoose = require("mongoose");
 const router = express.Router();
+const wrapAsync = require("../utils/wrapAsync.js");
 
-router.get("/balance",authUser,async(req,res)=>{
+router.get("/balance",authUser, wrapAsync(async(req,res)=>{
     const account = await Account.findOne({userId: req.userId});
     res.json({
         balance: account.balance
     });
-})
+}))
 
-router.post("/transfer",authUser,async(req,res)=>{
+router.post("/transfer",authUser, wrapAsync(async(req,res)=>{
     const session = await mongoose.startSession();
     const { success } = transferSchema.safeParse(req.body);
     if(!success){
@@ -44,6 +45,6 @@ router.post("/transfer",authUser,async(req,res)=>{
     res.json({
         msg: "Transfer successful"
     });
-})
+}))
 
 module.exports = router;

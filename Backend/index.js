@@ -26,6 +26,14 @@ async function main(){
 //Routes
 app.use("/api/v1",appRouter);
 
+//Error Handling Middleware
+app.use((err,req,res,next)=>{
+    const {statusCode = 500, message = "Internal Server Error!"} = err;
+    res.status(statusCode).json({
+        error: message
+    });
+})
+
 app.listen(PORT,()=>{
     console.log(`Server is listening on Port ${PORT}`);
 })
