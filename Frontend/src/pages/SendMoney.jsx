@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { AppBar } from "../components/AppBar";
@@ -8,9 +8,11 @@ export default function SendMoney(){
     const [amount,setAmount] = useState("");
     const id = searchParams.get("id");
     const name = searchParams.get("name");
+    const navigate = useNavigate();
 
     return(
         <>
+        { localStorage.getItem("token") && <>
             <AppBar name={localStorage.getItem("user").toUpperCase()}/>
             <div className="flex justify-center h-screen items-center p-4 bg-gray-100">
             <div className="border h-min max-w-md p-4 w-96 bg-white shadow-lg rounded-lg">
@@ -58,6 +60,7 @@ export default function SendMoney(){
                 </div>
             </div>
             </div>
+            </> || navigate("/signin")}
         </>
     )
 }

@@ -19,29 +19,14 @@ function App(){
             isSignedIn?<Navigate to={"/dashboard"}/>:<Navigate to={"/signin"}/>}
           />
           <Route path="/signup" element={<SignUp/>}/>
-          <Route path="/signin" element={
-            isAuth()?<Navigate to={"/dashboard"}/>:<SignIn/>}
-          />
-          <Route path="/dashboard" element={
-            isAuth()?<DashBoard/>:<Navigate to={"/signin"}/>}
-          />
-          <Route path="/send" element={
-            isAuth()?<SendMoney/>:<Navigate to={"/signin"}/>}
+          <Route path="/signin" element={<SignIn/>}/>
+          <Route path="/dashboard" element={<DashBoard/>}/>
+          <Route path="/send" element={<SendMoney/>}
           />
         </Routes>
       </BrowserRouter>
     </>
   );
-}
-
-function isAuth(){
-  const token = localStorage.getItem("token");
-  if(token){
-    return true;
-  }
-  else{
-    return false;
-  }
 }
 
 export default App;

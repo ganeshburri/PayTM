@@ -30,7 +30,7 @@ function SignIn(){
                                 password
                             })
                             localStorage.setItem("token",response.data.token)
-                            navigate("/dashboard")
+                            navigate("/dashboard");
                     }}/>
                     <BottomWarning label={"Don't have an account?"} buttonText={"Sign up"} to={"/signup"}/>
                 </div>
