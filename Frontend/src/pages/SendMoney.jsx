@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import { AppBar } from "../components/AppBar";
 
 export default function SendMoney(){
     const [searchParams] = useSearchParams();
@@ -8,7 +9,10 @@ export default function SendMoney(){
     const id = searchParams.get("id");
     const name = searchParams.get("name");
 
-    return <div className="flex justify-center h-screen items-center p-4 bg-gray-100">
+    return(
+        <>
+            <AppBar name={localStorage.getItem("user").toUpperCase()}/>
+            <div className="flex justify-center h-screen items-center p-4 bg-gray-100">
             <div className="border h-min max-w-md p-4 w-96 bg-white shadow-lg rounded-lg">
                 <div className="flex flex-col p-6">
                     <h2 className="text-3xl font-bold text-center">Send Money</h2>
@@ -53,6 +57,8 @@ export default function SendMoney(){
                     </div>
                 </div>
             </div>
-    </div>
+            </div>
+        </>
+    )
 }
 

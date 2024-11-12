@@ -7,9 +7,10 @@ const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 
 router.get("/balance",authUser, wrapAsync(async(req,res)=>{
-    const account = await Account.findOne({userId: req.userId});
+    const account = await Account.findOne({userId: req.userId}).populate("userId");
     res.json({
-        balance: account.balance
+        balance: account.balance,
+        name: account.userId.firstName
     });
 }))
 

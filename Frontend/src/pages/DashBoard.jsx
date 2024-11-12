@@ -16,6 +16,7 @@ function DashBoard(){
             .then((response)=>{
                 setBalance(response.data.balance)
                 setName(response.data.name);
+                localStorage.setItem("user",response.data.name)
             })
     },[])
     return(

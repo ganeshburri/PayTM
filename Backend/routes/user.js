@@ -33,7 +33,7 @@ router.post("/signup", wrapAsync(async (req,res)=>{
     const userId = newUser._id;
     const userAccount = new Account({
         userId : userId,
-        balance: (Math.random()*10000) + 1
+        balance: Math.floor((Math.random()*10000) + 1)
     })
     await userAccount.save();
     const token = jwt.sign({userId},secret);
@@ -100,6 +100,18 @@ router.get("/bulk", wrapAsync(async(req,res)=>{
     const users = await User.find(searchQuery, "email firstName lastName _id");
     res.json({
         users
+    })
+}))
+
+router.get("/verify",authUser,wrapAsync(async(req,res)=>{
+    const user = await User.findById(req.userId);
+    if(!user){
+        return res.json({
+            success: false
+        })
+    }
+    res.json({
+        success: true
     })
 }))
 
