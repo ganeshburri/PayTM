@@ -15,11 +15,19 @@ function App(){
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={isSignedIn?<Navigate to={"/dashboard"}/>:<Navigate to={"/signin"}/>}/>
+          <Route path="/" element={
+            isSignedIn?<Navigate to={"/dashboard"}/>:<Navigate to={"/signin"}/>}
+          />
           <Route path="/signup" element={<SignUp/>}/>
-          <Route path="/signin" element={isAuth()?<Navigate to={"/dashboard"}/>:<SignIn/>}/>
-          <Route path="/dashboard" element={isAuth()?<DashBoard/>:<Navigate to={"/signin"}/>}/>
-          <Route path="/send" element={isAuth()?<SendMoney/>:<Navigate to={"/signin"}/>}/>
+          <Route path="/signin" element={
+            isAuth()?<Navigate to={"/dashboard"}/>:<SignIn/>}
+          />
+          <Route path="/dashboard" element={
+            isAuth()?<DashBoard/>:<Navigate to={"/signin"}/>}
+          />
+          <Route path="/send" element={
+            isAuth()?<SendMoney/>:<Navigate to={"/signin"}/>}
+          />
         </Routes>
       </BrowserRouter>
     </>
