@@ -42,18 +42,27 @@ export default function SendMoney(){
                         </div>
                         <button className="rounded-md text-sm font-medium h-10
                             px-4 py-2 w-full bg-green-500 hover:bg-green-600
-                            focus:ring-4 focus:ring-green-300 text-white" onClick={()=>{
-                                axios.post("http://localhost:3000/api/v1/account/transfer",
-                                    {
-                                        to:id, //body
-                                        amount:parseInt(amount)
-                                    },
-                                    {
-                                        headers: {
-                                            Authorization: "Bearer " + localStorage.getItem("token")
+                            focus:ring-4 focus:ring-green-300 text-white" 
+                            onClick={async()=>{
+                                try{
+                                    const response = await axios.post("http://localhost:3000/api/v1/account/transfer",
+                                        {
+                                            to:id, //body
+                                            amount:parseInt(amount)
+                                        },
+                                        {
+                                            headers: {
+                                                Authorization: "Bearer " + localStorage.getItem("token")
+                                            }
                                         }
-                                    }
-                                )}}>
+                                    )
+                                    alert(response.data.msg)
+                                    navigate("/dashboard")
+                                }
+                                catch(err){
+                                    alert(err.response.data.msg)
+                                }
+                                }}>
                             Initiate Transfer
                         </button>
                     </div>

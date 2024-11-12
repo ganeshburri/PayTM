@@ -36,14 +36,19 @@ function SignUp(){
                         onChange={e => setPassword(e.target.value)}
                     />
                     <Button label={"Sign up"} onClick={async()=>{
-                        const response = await axios.post("http://localhost:3000/api/v1/users/signup",{
-                            email,
-                            firstName,
-                            lastName,
-                            password
-                        })
-                        localStorage.setItem("token",response.data.token)
-                        navigate("/dashboard")
+                        try{
+                            const response = await axios.post("http://localhost:3000/api/v1/users/signup",{
+                                email,
+                                firstName,
+                                lastName,
+                                password
+                            })
+                            localStorage.setItem("token",response.data.token)
+                            navigate("/dashboard")
+                        }
+                        catch(err){
+                            alert(err.response.data.msg)
+                        }
                     }}/>
                     <BottomWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"}/>
                 </div>

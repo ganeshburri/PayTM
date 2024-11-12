@@ -15,11 +15,13 @@ function DashBoard(){
                 Authorization: "Bearer " + localStorage.getItem("token") 
             }
         })
-            .then((response)=>{
-                setBalance(response.data.balance)
-                setName(response.data.name);
-                localStorage.setItem("user",response.data.name)
-            })
+        .then((response)=>{
+            setBalance(response.data.balance)
+            setName(response.data.name);
+            localStorage.setItem("user",response.data.name)
+        }).catch((err)=>{
+            alert(err.response.data.msg)
+        })
     },[])
     return(
         <>
