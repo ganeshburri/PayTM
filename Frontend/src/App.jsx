@@ -5,6 +5,7 @@ import SendMoney from "./pages/SendMoney";
 import DashBoard from "./pages/DashBoard";
 import useIsSignedIn from "./components/useIsSignedIn";
 import Loading from "./components/Loading";
+import Profile from "./pages/Profile";
 
 function App(){
   const { isSignedIn, loading } = useIsSignedIn();
@@ -21,8 +22,8 @@ function App(){
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/signin" element={<SignIn/>}/>
           <Route path="/dashboard" element={<DashBoard/>}/>
-          <Route path="/send" element={<SendMoney/>}
-          />
+          <Route path="/send" element={<SendMoney/>}/>
+          <Route path="/profile" element={<Profile/>}/>
         </Routes>
       </BrowserRouter>
     </>

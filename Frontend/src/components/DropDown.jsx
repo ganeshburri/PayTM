@@ -23,13 +23,13 @@ function AvatarDropdown({ name }) {
             {isOpen && (
                 <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                     <div className="py-1">
-                        <a href="#profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <a href='/profile' className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                             Profile
                         </a>
                         <a onClick={()=>{
                             localStorage.removeItem("token")
                             navigate("/signin")
-                        }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        }} className="block px-4 py-2 text-sm text-red-900 hover:bg-red-100">
                             Logout
                         </a>
                     </div>

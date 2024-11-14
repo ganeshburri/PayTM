@@ -14,12 +14,12 @@ function useIsSignedIn() {
     }
     const verifyToken = async () => {
         try {
-        const response = await axios.get("http://localhost:3000/api/v1/users/verify", {
+        const response = await axios.get("http://localhost:3000/api/v1/users/me", {
             headers: {
             Authorization: "Bearer " + token,
             },
         });
-        if (response.data.success) {
+        if (response.data.user) {
             setIsSignedIn(true);
             setLoading(false);
         } else {

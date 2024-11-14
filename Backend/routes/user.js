@@ -103,15 +103,10 @@ router.get("/bulk", wrapAsync(async(req,res)=>{
     })
 }))
 
-router.get("/verify",authUser,wrapAsync(async(req,res)=>{
-    const user = await User.findById(req.userId);
-    if(!user){
-        return res.json({
-            success: false
-        })
-    }
+router.get("/me",authUser,wrapAsync(async(req,res)=>{
+    const user = await User.findById(req.userId, "email firstName lastName");
     res.json({
-        success: true
+        user
     })
 }))
 
