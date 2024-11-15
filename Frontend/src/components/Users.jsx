@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Users = () => {
     const [users, setUsers] = useState([]);
     const [filter, setFilter] = useState("");
+    const [debouncedValue, setDebouncedValue] = useState(filter);
+
+    useEffect(() => {
+        // Set up a timer to update the debounced value after the specified delay
+        const timerId = setTimeout(() => {
+            setDebouncedValue(filter);
+        }, 500);
+        // Clean up the timer if the value changes before the delay has passed
+        return () => clearTimeout(timerId);
+    }, [filter]);
+
     useEffect(()=>{
         axios.get("http://localhost:3000/api/v1/users/bulk?filter=" + filter)
             .then(response=>{
                 setUsers(response.data.users)
             })
-    },[filter])
+    },[debouncedValue])
 
     return <>
         <div className="font-bold mt-6 text-lg">
