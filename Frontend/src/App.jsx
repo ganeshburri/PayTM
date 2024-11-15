@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import SendMoney from "./pages/SendMoney";
@@ -9,9 +9,11 @@ import Profile from "./pages/Profile";
 
 function App(){
   const { isSignedIn, loading } = useIsSignedIn();
+
   if(loading){
-    return<Loading/>
+    return <Loading/>
   }
+
   return (
     <>
       <BrowserRouter>
