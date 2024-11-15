@@ -7,6 +7,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../components/CustomAlert";
+const URL = import.meta.env.VITE_BACKEND_URL
 
 function SignIn(){
     const [email,setEmail] = useState("");
@@ -16,7 +17,7 @@ function SignIn(){
 
     const handleSignIn = async()=>{
         try{
-            const response = await axios.post("http://localhost:3000/api/v1/users/signin",
+            const response = await axios.post(`${URL}/users/signin`,
                 { email, password } )
                 localStorage.setItem("token",response.data.token)
                 setAlert({message: "Welcome Back!!", type: "success"})

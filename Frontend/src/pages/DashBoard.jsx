@@ -5,6 +5,7 @@ import { Users } from "../components/Users";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../components/CustomAlert";
+const URL = import.meta.env.VITE_BACKEND_URL
 
 function DashBoard(){
     const [name, setName] = useState("");
@@ -20,7 +21,7 @@ function DashBoard(){
     }, [token, navigate]);
 
     useEffect(()=>{
-        axios.get("http://localhost:3000/api/v1/account/balance",{
+        axios.get(`${URL}/account/balance`,{
             headers: {
                 Authorization: "Bearer " + token
             }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+const URL = import.meta.env.VITE_BACKEND_URL
 
 function useIsSignedIn() {
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -14,7 +15,7 @@ function useIsSignedIn() {
     }
     const verifyToken = async () => {
         try {
-        const response = await axios.get("http://localhost:3000/api/v1/users/me", {
+        const response = await axios.get(`${URL}/users/me`, {
             headers: {
             Authorization: "Bearer " + token,
             },

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { AppBar } from "../components/AppBar";
 import CustomAlert from "../components/CustomAlert";
+const URL = import.meta.env.VITE_BACKEND_URL
 
 export default function SendMoney() {
     const [searchParams] = useSearchParams();
@@ -26,7 +27,7 @@ export default function SendMoney() {
             return;
         }
         try {
-            const response = await axios.post("http://localhost:3000/api/v1/account/transfer", 
+            const response = await axios.post(`${URL}/account/transfer`, 
                 { to: id, amount: amountInt }, 
                 { headers: { Authorization: "Bearer " + token } }
             );

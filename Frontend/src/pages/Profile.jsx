@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
 import CustomAlert from "../components/CustomAlert";
+const URL = import.meta.env.VITE_BACKEND_URL
 
 function Profile(){
     const [firstName, setFirstName] = useState("");
@@ -25,7 +26,7 @@ function Profile(){
     useEffect(()=>{
         const info = async()=>{
             try {
-                const response = await axios.get("http://localhost:3000/api/v1/users/me", {
+                const response = await axios.get(`${URL}/users/me`, {
                     headers: {
                     Authorization: "Bearer " + token,
                     },
@@ -42,7 +43,7 @@ function Profile(){
 
     const handleUpdate = async()=>{
         try{
-            await axios.patch("http://localhost:3000/api/v1/users/me",{
+            await axios.patch(`${URL}/users/me`,{
                 email,
                 firstName,
                 lastName,

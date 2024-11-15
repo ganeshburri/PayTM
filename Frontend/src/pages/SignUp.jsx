@@ -7,6 +7,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../components/CustomAlert";
+const URL = import.meta.env.VITE_BACKEND_URL
 
 function SignUp(){
     const [firstName, setFirstName] = useState("");
@@ -18,7 +19,7 @@ function SignUp(){
 
     const handleSignUp = async()=>{
         try{
-            const response = await axios.post("http://localhost:3000/api/v1/users/signup",{
+            const response = await axios.post(`${URL}/users/signup`,{
                 email,
                 firstName,
                 lastName,
